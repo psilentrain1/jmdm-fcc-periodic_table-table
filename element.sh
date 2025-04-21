@@ -9,7 +9,9 @@ else
   if [ -z $ATOMIC_NUMBER ]; then
     echo "I could not find that element in the database."
   else
-    echo "Continue"
-    fi
+    DATA=$($PSQL "SELECT elements.atomic_number, elements.symbol, elements.name, properties.atomic_mass, properties.melting_point_celsius, properties.boiling_point_celsius, types.type FROM elements INNER JOIN properties ON elements.atomic_number = properties.atomic_number INNER JOIN types ON properties.type_id = types.type_id WHERE elements.atomic_number = $(($ATOMIC_NUMBER));")
+
+    echo $DATA
+  fi
 fi
 
